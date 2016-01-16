@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% from "form_macros.html" import render_field %}
+
+{% block title %}
+Add a New Post
+{% endblock %}
+
+{% block content %}
+  <section>
+    <form action="" method="post">
+        {{form.hidden_tag()}}
+        <table>
+            {{ render_field(form.title, size=50) }}
+            {{ render_field(form.entry, size=50) }}
+            <tr>
+                <td></td>
+                <td><button type="submit">Submit</button></td>
+            </tr>
+        </table>
+    </form>
+  </section>
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}

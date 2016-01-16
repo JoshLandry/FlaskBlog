@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}
+Flask Blog
+{% endblock %}
+
+{% block content %}
+                <article>
+                    <header>
+                        <h1>Thx for stopping by</h1>
+                        <p>This is my musick blog, powered by Flask</p>
+                    </header>
+                    <section>
+                        <h2>Recently Added</h2>
+                        {% if new_posts %}
+                            <ul>
+                            {% for bm in new_posts %}
+                                <li>{{ bm.user }} added <a href="{{ bm.title }}">{{ bm.title }}</a></li>
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                            No new posts.
+                        {% endif %}
+                    </section>
+                    <section>
+                        {% for bm in new_posts %}
+                        <h2>Title: {{ bm.title }}, posted on: {{ bm.date }}</h2>
+                        <p>Entry: {{ bm.entry }}</p>
+                        {% endfor %}
+                    </section>
+
+                </article>
+{% endblock %}
