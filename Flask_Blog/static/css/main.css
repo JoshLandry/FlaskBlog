@@ -57,7 +57,9 @@ textarea {
    ========================================================================== */
 
 body {
-    font: 16px/26px Helvetica, Helvetica Neue, Arial;
+    font: 16px/26px Garamond, Helvetica Neue, Arial;
+    color: beige;
+    background-image: url("../img/chapter3.jpg");
 }
 
 .wrapper {
@@ -70,22 +72,23 @@ body {
    =================== */
 
 .header-container {
-    border-bottom: 20px solid #e44d26;
+    border-bottom: 5px solid darkblue;
 }
 
 .footer-container,
 .main aside {
-    border-top: 20px solid #e44d26;
+    border-top: 5px solid darkblue;
 }
 
 .header-container,
 .footer-container,
 .main aside {
     background: #f16529;
+    background-image: url("../img/dreamcity.jpg");
 }
 
 .title {
-    color: white;
+    color: pink;
 }
 
 /* ==============
@@ -108,7 +111,7 @@ nav a {
     font-weight: bold;
 
     color: white;
-    background: #e44d26;
+    background-image: url("../img/dreamcity.jpg");
 }
 
 nav a:hover,
@@ -154,17 +157,29 @@ nav a:hover {
    Author's custom styles
    ========================================================================== */
 
+h1, h2 {
+    color: pink;
+}
 
+h3 {
+    color: pink;
+}
 
+h4 {
+    color: pink;
+}
 
+p {
+    color: beige;
+}
 
+button {
+    color: purple;
+}
 
-
-
-
-
-
-
+a {
+    color: yellow;
+}
 
 
 

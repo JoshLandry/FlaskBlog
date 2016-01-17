@@ -23,9 +23,10 @@ Flask Blog
                         {% endif %}
                     </section>
                     <section>
+                        <h2>Posts</h2>
                         {% for bm in new_posts %}
-                        <h2>Title: {{ bm.title }}, posted on: {{ bm.date }}</h2>
-                        <p>Entry: {{ bm.entry }}</p>
+                        <h3>{{ bm.title }}, posted on: {{ bm.date }} by {{ bm.user.username }}</h3>
+                        <p>{{ bm.entry }}</p>
                         {% endfor %}
                     </section>
 
