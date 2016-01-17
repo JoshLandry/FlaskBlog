@@ -14,8 +14,8 @@ Flask Blog
                         <h2>Recently Added</h2>
                         {% if new_posts %}
                             <ul>
-                            {% for bm in new_posts %}
-                                <li>{{ bm.user }} added <a href="{{ bm.title }}">{{ bm.title }}</a></li>
+                            {% for entry in new_posts %}
+                                <li>{{ entry.user.username }} added <a href="{{ entry.title }}">{{ entry.title }}</a></li>
                             {% endfor %}
                             </ul>
                         {% else %}

@@ -1,13 +1,20 @@
 #! /usr/bin/env python
 
 from Flask_Blog import app, db
-from flask.ext.script import Manager, prompt_bool
+# from Flask_Blog.models import User
+from flask.ext.script import Server, Manager, prompt_bool
+
+server = Server(port=9000)
 
 manager = Manager(app)
+manager.add_command("runserver", Server())
 
 @manager.command
 def initdb():
     db.create_all()
+    db.session.add(User(username="landry", email="bluemazaro@yahoo.com"))
+    db.session.add(User(username="goatness", email="goat@goatcontrol.usa"))
+    db.session.commit()
     print 'Initialized the database'
 
 @manager.command
