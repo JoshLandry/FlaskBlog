@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
 {% block title %}
-Flask Blog
+IN_DEPTH MAGICKAL MUSICK REVIEWS
 {% endblock %}
 
 {% block content %}
                 <article>
                     <header>
                         <h1>Thx for stopping by</h1>
-                        <p>This is my musick blog, powered by Flask</p>
+                        <p>This is my musick review blog, powered by Flask & Python.</p>
                     </header>
                     <section>
                         <h2>Recently Added</h2>
@@ -25,7 +25,7 @@ Flask Blog
                     <section>
                         <h2>Posts</h2>
                         {% for bm in new_posts %}
-                        <h3>{{ bm.title }}, posted on: {{ bm.date }} by {{ bm.user.username }}</h3>
+                        <h3>{{ bm.title }}, posted on: {{ bm.date }} by {{ bm.user.username }}</h2>
                         <p>{{ bm.entry }}</p>
                         {% endfor %}
                     </section>

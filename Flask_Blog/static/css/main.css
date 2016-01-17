@@ -121,6 +121,7 @@ nav a:visited {
 
 nav a:hover {
     text-decoration: underline;
+    transform: scale(1.1);
 }
 
 /* ==============
@@ -136,12 +137,12 @@ nav a:hover {
 }
 
 .main aside {
-    color: white;
+    color: green;
     padding: 0px 5% 10px;
 }
 
 .footer-container footer {
-    color: white;
+    color: green;
     padding: 20px 0;
 }
 
@@ -174,11 +175,11 @@ p {
 }
 
 button {
-    color: purple;
+  color: purple;
 }
 
 a {
-    color: yellow;
+  color: yellow;
 }
 
 
