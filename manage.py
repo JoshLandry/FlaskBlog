@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-from Flask_Blog import app, db
+from Flask_Blog import app, db, User
 # from Flask_Blog.models import User
 from flask.ext.script import Server, Manager, prompt_bool
 
@@ -12,8 +12,8 @@ manager.add_command("runserver", Server())
 @manager.command
 def initdb():
     db.create_all()
-    db.session.add(User(username="landry", email="bluemazaro@yahoo.com"))
-    db.session.add(User(username="goatness", email="goat@goatcontrol.usa"))
+    db.session.add(User(username="landry", email="bluemazaro@yahoo.com", password="test"))
+    db.session.add(User(username="goatness", email="goat@goatcontrol.usa", password="test"))
     db.session.commit()
     print 'Initialized the database'
 

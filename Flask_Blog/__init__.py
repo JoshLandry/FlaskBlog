@@ -24,6 +24,7 @@ from datetime import datetime
 
 from sqlalchemy import desc
 from flask_login import UserMixin
+from werkzeug.security import check_password_hash, generate_password_hash
 
 class BlogEntry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -44,16 +45,32 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(80), unique=True)
     email = db.Column(db.String(120), unique=True)
     postedEntries = db.relationship('BlogEntry', backref='user', lazy='dynamic')
+    password_hash = db.Column(db.String)
+
+    @property
+    def password(self):
+        raise AttributeError('password: write-only field')
+
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    @staticmethod
+    def get_by_username(username):
+        return User.query.filter_by(username=username).first()
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return "<User '{}'>".format(self.username)
 
 # import views
 
 from flask import render_template, url_for, redirect, flash
-from flask_login import login_required, login_user
+from flask_login import login_required, login_user, logout_user, current_user
 
-from forms import PostForm, LoginForm
+from forms import PostForm, LoginForm, SignupForm
 
 @login_manager.user_loader
 def load_user(userid):
@@ -71,7 +88,7 @@ def add():
     if form.validate_on_submit():
         entry = form.entry.data
         title = form.title.data
-        newEntry = BlogEntry(user=logged_in_user(), title=title, entry=entry)
+        newEntry = BlogEntry(user=current_user, title=title, entry=entry)
         db.session.add(newEntry)
         db.session.commit()
         flash("Stored entry: '{}'".format(title))
@@ -87,13 +104,31 @@ def user(username):
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        if user is not None:
+        user = User.get_by_username(form.username.data)
+        if user is not None and user.check_password(form.password.data):
             login_user(user, form.remember_me.data)
             flash("Logged in successfully as {}.".format(user.username))
-            return redirect(url_for('index'))
+            return redirect(url_for('user', username=user.username))
         flash('Incorrect username or password.')
     return render_template("login.html", form=form)
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    form = SignupForm()
+    if form.validate_on_submit():
+        user = User(email=form.email.data,
+                    username=form.username.data,
+                    password=form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Welcome, {}! Please login.'.format(user.username))
+        return redirect(url_for('login'))
+    return render_template("signup.html", form=form)
 
 @app.errorhandler(404)
 def page_not_found(e):

@@ -20,8 +20,9 @@
                 <nav>
                     <ul>
                         <li><a href="{{ url_for('add') }}">Post New</a></li>
-                        <li><a href="#">Sign up</a></li>
-                        <li><a href="#">Sign in</a></li>
+                        <li><a href="{{ url_for('signup') }}">Sign up</a></li>
+                        <li><a href="{{ url_for('logout') }}">Sign Out</a></li>
+                        <li><a href="{{ url_for('login') }}">Sign In</a></li>
                     </ul>
                 </nav>
             </header>
