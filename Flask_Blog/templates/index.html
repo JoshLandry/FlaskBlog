@@ -24,9 +24,9 @@ IN_DEPTH MAGICKAL MUSICK REVIEWS
                     </section>
                     <section>
                         <h2>Posts</h2>
-                        {% for bm in new_posts %}
-                        <h3>{{ bm.title }}, posted on: {{ bm.date }} by {{ bm.user.username }}</h2>
-                        <p>{{ bm.entry }}</p>
+                        {% for entry in new_posts %}
+                        <h3>( {{entry.rating}}/5 ) {{ entry.artist }} - "{{ entry.title }}", posted on: {{ entry.date.year }}.{{ entry.date.month }}.{{ entry.date.day }} by {{ entry.user.username }}</h2>
+                        <p>{{ entry.entry }}</p>
                         {% endfor %}
                     </section>
 

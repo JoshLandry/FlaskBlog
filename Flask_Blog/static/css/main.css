@@ -1,5 +1,9 @@
 /*! HTML5 Boilerplate v5.0 | MIT License | http://h5bp.com/ */
 
+* {
+    margin: 0;
+}
+
 html {
     color: #222;
     font-size: 1em;
@@ -60,10 +64,16 @@ body {
     font: 16px/26px Garamond, Helvetica Neue, Arial;
     color: beige;
     background-image: url("../img/chapter3.jpg");
+
+    height: 100%;
 }
 
 .wrapper {
     width: 90%;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+/*    margin: 0 auto -4em;*/
     margin: 0 5%;
 }
 
@@ -78,6 +88,7 @@ body {
 .footer-container,
 .main aside {
     border-top: 5px solid darkblue;
+    border-bottom: 5px solid darkblue;
 }
 
 .header-container,
@@ -91,27 +102,42 @@ body {
     color: pink;
 }
 
+.footer, .push {
+    height: 4em;
+}
+
+.footer {
+    background-image: url("../img/dreamcity.jpg");
+    height:400%;
+}
+
 /* ==============
     MOBILE: Menu
    ============== */
 
-nav ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-}
-
 nav a {
-    display: block;
-    margin-bottom: 10px;
-    padding: 15px 0;
+    display: inline-block;
+    padding: 50px 50px;
 
     text-align: center;
     text-decoration: none;
     font-weight: bold;
 
+    border-left: 5px solid green;
+    border-right: 5px solid green;
+
     color: white;
-    background-image: url("../img/dreamcity.jpg");
+    background-image: url("../img/smearmaze.jpg");
+
+}
+
+nav h1 {
+    width: 200px;
+}
+
+nav td {
+    width: 400px;
+    height: 50px;
 }
 
 nav a:hover,
@@ -142,7 +168,6 @@ nav a:hover {
 }
 
 .footer-container footer {
-    color: green;
     padding: 20px 0;
 }
 
@@ -216,10 +241,6 @@ input {
     INTERMEDIATE: IE Fixes
    ======================== */
 
-    nav ul li {
-        display: inline;
-    }
-
     .oldie nav a {
         margin: 0 0.7%;
     }
@@ -247,8 +268,8 @@ input {
     }
 
     nav {
-        float: right;
-        width: 38%;
+        float: left;
+        width: 100%;
     }
 
 /* ============

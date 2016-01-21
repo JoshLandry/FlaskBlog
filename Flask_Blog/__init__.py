@@ -28,9 +28,11 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 class BlogEntry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    artist = db.Column(db.String(300), nullable=False)
     title = db.Column(db.String(300), nullable=False)
     date = db.Column(db.DateTime, default=datetime.utcnow)
     entry = db.Column(db.String(300))
+    rating = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     @staticmethod
@@ -86,9 +88,11 @@ def index():
 def add():
     form = PostForm()
     if form.validate_on_submit():
+        artist = form.artist.data
         entry = form.entry.data
         title = form.title.data
-        newEntry = BlogEntry(user=current_user, title=title, entry=entry)
+        rating = form.rating.data
+        newEntry = BlogEntry(user=current_user, title=title, entry=entry, rating=rating, artist=artist)
         db.session.add(newEntry)
         db.session.commit()
         flash("Stored entry: '{}'".format(title))

@@ -16,14 +16,17 @@
 
         <div class="header-container">
             <header class="wrapper clearfix">
-                <h1 class="title">IN_DEPTH MAGICKAL MUSICK REVIEWS</h1>
+                
                 <nav>
-                    <ul>
-                        <li><a href="{{ url_for('add') }}">Post New</a></li>
-                        <li><a href="{{ url_for('signup') }}">Sign up</a></li>
-                        <li><a href="{{ url_for('logout') }}">Sign Out</a></li>
-                        <li><a href="{{ url_for('login') }}">Sign In</a></li>
-                    </ul>
+                    <table>
+                        <tr>
+                            <td><h1 class="title">IN_DEPTH MAGICKAL MUSICK REVIEWS</h1></td>
+                            <td><a href="{{ url_for('add') }}">Post New</a></td>
+                            <td><a href="{{ url_for('signup') }}">Sign up</a></td>
+                            <td><a href="{{ url_for('logout') }}">Sign Out</a></td>
+                            <td><a href="{{ url_for('login') }}">Sign In</a></td>
+                        </tr>
+                    </table>
                 </nav>
             </header>
         </div>

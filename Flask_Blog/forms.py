@@ -1,12 +1,14 @@
 from flask_wtf import Form
-from wtforms.fields import StringField, PasswordField, BooleanField, SubmitField
+from wtforms.fields import StringField, PasswordField, BooleanField, SubmitField, IntegerField
 from flask.ext.wtf.html5 import URLField
 from wtforms.validators import DataRequired, url, Length, Email, Regexp, EqualTo,\
     url, ValidationError
 
 class PostForm(Form):
-    entry = StringField('Enter post content:')
-    title = StringField('Enter post title:')
+    entry = StringField('Enter your review of the album:')
+    artist = StringField('Enter the artist that created this album:')
+    title = StringField('Enter the album title:')
+    rating = IntegerField('Rate the album out of 5:')
 
 class LoginForm(Form):
     username = StringField('Your Username:', validators=[DataRequired()])
