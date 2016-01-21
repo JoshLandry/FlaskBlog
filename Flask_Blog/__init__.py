@@ -2,6 +2,7 @@ import os
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -11,11 +12,18 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'Fl
 app.config['DEBUG'] = True
 db = SQLAlchemy(app)
 
+# configure auth
+login_manager = LoginManager()
+login_manager.session_protection = "strong"
+login_manager.login_view = "login"
+login_manager.init_app(app)
+
 # import models
 
 from datetime import datetime
 
 from sqlalchemy import desc
+from flask_login import UserMixin
 
 class BlogEntry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -31,7 +39,7 @@ class BlogEntry(db.Model):
     def __repr__(self):
         return "<Bookmark '{}': '{}'>".format(self.entry, self.title)
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True)
     email = db.Column(db.String(120), unique=True)
@@ -43,11 +51,13 @@ class User(db.Model):
 # import views
 
 from flask import render_template, url_for, redirect, flash
-from forms import PostForm
+from flask_login import login_required, login_user
 
-# Fake Login
-def logged_in_user():
-    return User.query.filter_by(username='landry').first()
+from forms import PostForm, LoginForm
+
+@login_manager.user_loader
+def load_user(userid):
+    return User.query.get(int(userid))
 
 @app.route('/')
 @app.route('/index')
@@ -55,6 +65,7 @@ def index():
     return render_template('index.html', new_posts=BlogEntry.newest(5))
 
 @app.route('/add', methods=['GET', 'POST'])
+@login_required
 def add():
     form = PostForm()
     if form.validate_on_submit():
@@ -71,6 +82,18 @@ def add():
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('user.html', user=user)
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is not None:
+            login_user(user, form.remember_me.data)
+            flash("Logged in successfully as {}.".format(user.username))
+            return redirect(url_for('index'))
+        flash('Incorrect username or password.')
+    return render_template("login.html", form=form)
 
 @app.errorhandler(404)
 def page_not_found(e):
