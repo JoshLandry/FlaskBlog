@@ -7,23 +7,12 @@ IN_DEPTH MAGICKAL MUSICK REVIEWS
 {% block content %}
                 <article>
                     <header>
-                        <h1>Thx for stopping by</h1>
+                        <h2>Thx for stopping by</h2>
                         <p>This is my musick review blog, powered by Flask & Python.</p>
                     </header>
+                   
                     <section>
-                        <h2>Recently Added</h2>
-                        {% if new_posts %}
-                            <ul>
-                            {% for entry in new_posts %}
-                                <li>{{ entry.user.username }} added <a href="{{ entry.title }}">{{ entry.title }}</a></li>
-                            {% endfor %}
-                            </ul>
-                        {% else %}
-                            No new posts.
-                        {% endif %}
-                    </section>
-                    <section>
-                        <h2>Posts</h2>
+                        <h1>Reviews</h1>
                         {% for entry in new_posts %}
                         <h3>( {{entry.rating}}/5 ) {{ entry.artist }} - "{{ entry.title }}", posted on: {{ entry.date.year }}.{{ entry.date.month }}.{{ entry.date.day }} by {{ entry.user.username }}</h2>
                         <p>{{ entry.entry }}</p>

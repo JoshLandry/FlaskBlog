@@ -51,8 +51,22 @@
 
                {% block sidebar %}
                     <aside>
-                        <h3>Who I am</h3>
+                        <section>
+                            <h2>Recently Added</h2>
+                            {% if new_posts %}
+                                <ul>
+                                {% for entry in new_posts %}
+                                    <li>{{ entry.user.username }} added <a href="{{ entry.title }}">{{ entry.title }}</a></li>
+                                {% endfor %}
+                                </ul>
+                            {% else %}
+                                No new posts.
+                            {% endif %}
+                        </section>
+
+                        <h2>Who I am</h2>
                         <p>Boy Landry writes these reviews.</p>
+                        <img src="{{ url_for('static', filename='img/purpleman.jpg') }}"></img>
                     </aside>
                {% endblock %}
 
