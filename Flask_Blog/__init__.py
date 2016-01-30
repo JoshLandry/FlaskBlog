@@ -4,9 +4,10 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
+app = Flask(__name__)
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-app = Flask(__name__)
 app.config['SECRET_KEY'] = '.t\xe5\xc37\xf6\xa9(\x81\xbe\x89#\xee\x00\xdf\x87\xfab\xd5\xe7FQ:%'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'Flask_Blog.db')
 app.config['DEBUG'] = True
@@ -120,7 +121,7 @@ class SignupForm(Form):
 
 #
 
-from flask import render_template, url_for, redirect, flash
+from flask import render_template, url_for, redirect, flash, abort
 from flask_login import login_required, login_user, logout_user, current_user
 
 @login_manager.user_loader
@@ -147,6 +148,21 @@ def add():
         flash("Stored entry: '{}'".format(title))
         return redirect(url_for('index'))
     return render_template('add.html', form=form)
+
+@app.route('/edit/<int:entry_id>', methods=['GET', 'POST'])
+@login_required
+def edit_entry(entry_id):
+    entry = BlogEntry.query.get_or_404(entry_id)
+    if current_user != entry.user:
+        abort(403)
+    form = PostForm(obj=entry)
+    if form.validate_on_submit():
+        form.populate_obj(entry)
+        db.session.commit()
+        flash("Stored '{}'".format(entry.title))
+        return redirect(url_for('user', username=current_user.username))
+    return render_template('ReviewForm.html', form=form, title="Edit entry")
+
 
 @app.route('/user/<username>')
 def user(username):

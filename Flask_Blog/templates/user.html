@@ -7,20 +7,26 @@ Posts by user {{ user.username }}
 {% block content %}
     <article>
         <header>
-            <h1>Articles by {{ user.username }}</h1>
+            <h1>Reviews by {{ user.username }}</h1>
+
+            {% if user.postedEntries.count() > 0 %}
+                {% with reviews=user.postedEntries %}
+                    {% include "ReviewList.html" %}
+                {% endwith %}
+            {% else %}
+                This user has not added any reviews yet.
+            {% endif %}
 
             <ul>
                 {% for entry in user.postedEntries %}
                     <li>
-                        <a href="{{ entry.title }}"></a>
-                        <h3>( {{entry.rating}}/5 ) {{ entry.artist }} - "{{ entry.title }}", posted on: {{ entry.date.year }}.{{ entry.date.month }}.{{ entry.date.day }} by {{ entry.user.username }}</h2>
-                        <p> {{entry.entry}} </p>
-                        <button>Edit Entry</button>
+
                     </li>
                 {% else %}
                     <li> This user has not posted anything.</li>
                 {% endfor %}
             </ul>
+
         </header>
     </article>
 {% endblock %}

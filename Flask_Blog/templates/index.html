@@ -19,5 +19,16 @@ IN_DEPTH MAGICKAL MUSICK REVIEWS
                         {% endfor %}
                     </section>
 
+                    <section>
+                        <h1>Reinherdt Reviews</h1>
+                        {% if new_posts.count() > 0 %}
+                            {% with posts=new_posts %}
+                                {% include "ReviewList.html" %}
+                            {% endwith %}
+                        {% else %}
+                            No reviews have been added yet.
+                        {% endif %}
+                    </section>
+
                 </article>
 {% endblock %}

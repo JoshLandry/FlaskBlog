@@ -1,0 +1,16 @@
+<ul class="reviews" >
+    {% for entry in reviews %}
+        <li>
+            <a href="{{ entry.title }}"></a>
+            <h3>( {{entry.rating}}/5 ) {{ entry.artist }} - "{{ entry.title }}", posted on: {{ entry.date.year }}.{{ entry.date.month }}.{{ entry.date.day }} by {{ entry.user.username }}</h2>
+            <p> {{entry.entry}} </p>
+
+            {% if current_user == entry.user %}
+                <span class="editposts">
+                    <a href="{{ url_for('edit_entry', entry_id=entry.id) }}">edit</a>
+                </span>
+            {% endif %}
+
+        </li>
+    {% endfor %}
+</ul>
