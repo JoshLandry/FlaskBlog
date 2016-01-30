@@ -7,13 +7,15 @@ Posts by user {{ user.username }}
 {% block content %}
     <article>
         <header>
-            <h1>Bookmarks for {{ user.username }}</h1>
+            <h1>Articles by {{ user.username }}</h1>
 
             <ul>
-                {% for post in user.postedEntries %}
+                {% for entry in user.postedEntries %}
                     <li>
-                        <a href="{{ post.title }}">{{ post.entry }}</a>
-                        <span class="timestamp">Added at {{ post.date }}</span>
+                        <a href="{{ entry.title }}"></a>
+                        <h3>( {{entry.rating}}/5 ) {{ entry.artist }} - "{{ entry.title }}", posted on: {{ entry.date.year }}.{{ entry.date.month }}.{{ entry.date.day }} by {{ entry.user.username }}</h2>
+                        <p> {{entry.entry}} </p>
+                        <button>Edit Entry</button>
                     </li>
                 {% else %}
                     <li> This user has not posted anything.</li>
