@@ -91,6 +91,10 @@ body {
     border-bottom: 5px solid darkblue;
 }
 
+.main aside {
+    width: 90%;
+}
+
 .header-container,
 .footer-container,
 .main aside {
@@ -219,26 +223,30 @@ img {
 }
 
 .editposts {
-    float: right;
+}
+
+ul {
+  list-style-type: none
 }
 
 /* ==========================================================================
    Media Queries
    ========================================================================== */
 
+nav a {
+        float: left;
+        width: 27%;
+        height: 60%;
+        margin: 0 1.7%;
+        padding: 25px 2%;
+        margin-bottom: 0;
+}
+
 @media only screen and (min-width: 480px) {
 
 /* ====================
     INTERMEDIATE: Menu
    ==================== */
-
-    nav a {
-        float: left;
-        width: 27%;
-        margin: 0 1.7%;
-        padding: 25px 2%;
-        margin-bottom: 0;
-    }
 
     nav li:first-child a {
         margin-left: 0;
@@ -263,29 +271,6 @@ img {
     WIDE: CSS3 Effects
    ==================== */
 
-    .header-container,
-    .main aside {
-        -webkit-box-shadow: 0 5px 10px #aaa;
-           -moz-box-shadow: 0 5px 10px #aaa;
-                box-shadow: 0 5px 10px #aaa;
-    }
-
-/* ============
-    WIDE: Menu
-   ============ */
-
-    .title {
-        float: left;
-    }
-
-    nav {
-        float: left;
-        width: 100%;
-    }
-
-/* ============
-    WIDE: Main
-   ============ */
 
     .main article {
         float: left;

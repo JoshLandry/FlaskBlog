@@ -13,16 +13,8 @@ IN_DEPTH MAGICKAL MUSICK REVIEWS
                    
                     <section>
                         <h1>Reviews</h1>
-                        {% for entry in new_posts %}
-                        <h3>( {{entry.rating}}/5 ) {{ entry.artist }} - "{{ entry.title }}", posted on: {{ entry.date.year }}.{{ entry.date.month }}.{{ entry.date.day }} by {{ entry.user.username }}</h2>
-                        <p>{{ entry.entry }}</p>
-                        {% endfor %}
-                    </section>
-
-                    <section>
-                        <h1>Reinherdt Reviews</h1>
                         {% if new_posts.count() > 0 %}
-                            {% with posts=new_posts %}
+                            {% with reviews=new_posts %}
                                 {% include "ReviewList.html" %}
                             {% endwith %}
                         {% else %}
