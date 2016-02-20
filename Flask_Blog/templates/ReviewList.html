@@ -5,6 +5,17 @@
             <h3>( {{entry.rating}}/5 ) {{ entry.artist }} - "{{ entry.title }}", posted on: {{ entry.date.year }}.{{ entry.date.month }}.{{ entry.date.day }} by {{ entry.user.username }}</h2>
             <p> {{entry.entry}} </p>
 
+            <span class="tags">
+                {% if entry.tags %}
+                    {% for t in entry._tags %}
+                        <a href="#">{{ t }}</a>
+                    {% endfor %}
+                {% else %}No tags.
+                {% endif %}
+            </span>
+
+            <br>
+
             {% if current_user == entry.user %}
                 <span class="editposts">
                     <a href="{{ url_for('edit_entry', entry_id=entry.id) }}">Edit Review</a>

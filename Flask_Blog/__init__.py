@@ -40,15 +40,24 @@ class BlogEntry(db.Model):
     entry = db.Column(db.String(300))
     rating = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    tags = db.relationship('Tag', secondary=tags,
+    _tags = db.relationship('Tag', secondary=tags,
                             backref=db.backref('entries', lazy='dynamic'))
 
     @staticmethod
     def newest(num):
         return BlogEntry.query.order_by(desc(BlogEntry.date)).limit(num)
 
+    @property
+    def tags(self):
+        return ",".join([t.name for t in self._tags])
+
+    @tags.setter
+    def tags(self, string):
+        if string:
+            self._tags = [Tag.get_or_create(name) for name in string.split(',')]
+
     def __repr__(self):
-        return "<Bookmark '{}': '{}'>".format(self.entry, self.title)
+        return "<BlogEntry '{}': '{}'>".format(self.entry, self.title)
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -79,6 +88,17 @@ class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(25), nullable=False, unique=True, index=True)
 
+    @staticmethod
+    def get_or_create(name):
+        try:
+            return Tag.query.filter_by(name=name).one()
+        except:
+            return Tag(name=name)
+
+    @staticmethod
+    def all():
+        return Tag.query.all()
+
     def __repr__(self):
         return self.name
 
@@ -99,6 +119,16 @@ class PostForm(Form):
     artist = StringField('Enter the artist that created this album:')
     title = StringField('Enter the album title:')
     rating = IntegerField('Rate the album out of 5:')
+    tags = StringField('Tags', validators=[Regexp(r'^[a-zA-Z0-9, ]*$',
+                    message="Tags can only contain letters and numbers")])
+
+    def validate(self):
+        stripped = [t.strip() for t in self.tags.data.split(',')]
+        not_empty = [tag for tag in stripped if tag]
+        tagset = set(not_empty)
+        self.tags.data = ",".join(tagset)
+
+        return True
 
 class LoginForm(Form):
     username = StringField('Your Username:', validators=[DataRequired()])
@@ -156,7 +186,8 @@ def add():
         entry = form.entry.data
         title = form.title.data
         rating = form.rating.data
-        newEntry = BlogEntry(user=current_user, title=title, entry=entry, rating=rating, artist=artist)
+        tags = form.tags.data
+        newEntry = BlogEntry(user=current_user, title=title, entry=entry, rating=rating, artist=artist, tags=tags)
         db.session.add(newEntry)
         db.session.commit()
         flash("Stored entry: '{}'".format(title))

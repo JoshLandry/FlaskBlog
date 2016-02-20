@@ -15,7 +15,8 @@
             {{ render_field(form.title, size=50) }}
             {{ render_field(form.entry, size=50) }}
             {{ render_field(form.rating, size=50) }}
-            <tr>
+            {{ render_field(form.tags, size=50) }}
+            <tr class="submit">
                 <td></td>
                 <td><button type="submit">Submit</button></td>
             </tr>
