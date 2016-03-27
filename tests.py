@@ -1,19 +1,25 @@
 import os
 import Flask_Blog
+from Flask_Blog import app, User, BlogEntry, Tag
 import unittest
+from flask_sqlalchemy import SQLAlchemy
 import tempfile
 
 class Flask_BlogTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.db_fd, Flask_Blog.app.config['DATABASE'] = tempfile.mkstemp()
-        Flask_Blog.app.config['TESTING'] = True
-        self.app = Flask_Blog.app.test_client()
-        Flask_Blog.init_db()
+        Flask_Blog.db.drop_all()
+        Flask_Blog.db.create_all()
+        print 'Created test DB.'
 
     def tearDown(self):
-        os.close(self.db_fd)
-        os.unlink(Flask_Blog.app.config['DATABASE'])
+        Flask_Blog.db.drop_all()
+
+    def test_add_user(self):
+        TestUser = User(username="testuser", email="test@yahoo.com", password="yokel")
+        Flask_Blog.db.session.add(TestUser)
+        Flask_Blog.db.session.commit()
+        print 'Added test user.'
 
 if __name__ == '__main__':
     unittest.main()
