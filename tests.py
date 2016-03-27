@@ -21,5 +21,18 @@ class Flask_BlogTestCase(unittest.TestCase):
         Flask_Blog.db.session.commit()
         print 'Added test user.'
 
+    def test_add_post(self):
+        TestUser = User(username="testuser", email="test@yahoo.com", password="yokel")
+        def add_post(artist, title, entry, rating, tags):
+            Flask_Blog.db.session.add(BlogEntry(artist=artist, title=title, entry=entry, rating=rating, user=TestUser, tags=tags))
+
+        for name in ["ambient", "noise", "avant garde"]:
+            Flask_Blog.db.session.add(Tag(name=name))
+        Flask_Blog.db.session.commit()
+
+        add_post("The Twentieth Century", "The Twentieth Century", "review", "4", "ambient,noise")
+        Flask_Blog.db.session.commit()
+        print 'Added test post.'
+
 if __name__ == '__main__':
     unittest.main()
